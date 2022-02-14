@@ -6,19 +6,28 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSliderModule } from '@angular/material/slider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { ManagementComponent } from './management/management.component';
+import { RouteNotFoundComponent } from './route-not-found/route-not-found.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    ManagementComponent,
+    RouteNotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
 		BrowserAnimationsModule,
 
-		MatProgressBarModule
+    NgbModule,
+
+		ReactiveFormsModule
 
   ],
   providers: [],
