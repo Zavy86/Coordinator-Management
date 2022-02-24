@@ -12,6 +12,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {CookieService} from 'ngx-cookie-service';
 import { LogoutComponent } from './logout/logout.component';
 import { HubComponent } from './hub/hub.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HubComponent } from './hub/hub.component';
     ManagementComponent,
     RouteNotFoundComponent,
     LogoutComponent,
-    HubComponent
+    HubComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

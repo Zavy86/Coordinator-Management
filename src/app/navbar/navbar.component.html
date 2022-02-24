@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+	<a class="navbar-brand" href="#">Coordinator</a>
+
+	<button *ngIf="sessionService.isValid()" (click)="isMenuCollapsed = !isMenuCollapsed" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div *ngIf="sessionService.isValid()" [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
+
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"> <!-- active -->
+				<a class="nav-link" routerLink="/Hub">Hub</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="/Management">Management</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="/Logout">Logout</a>
+			</li>
+		</ul>
+
+		<ul class="navbar-nav">
+			<li ngbDropdown class="nav-item dropdown">
+				<a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">You</a>
+				<ul ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">  <!-- @valutare se mettere end sul bootstrap 5 -->
+					<li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+					<li><a class="dropdown-item" routerLink="/Logouta">Logout</a></li>
+				</ul>
+			</li>
+		</ul>
+
+	</div>
+
+</nav>
+<br/>

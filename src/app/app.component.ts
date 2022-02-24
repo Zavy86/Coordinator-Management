@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {SessionService} from "../services/session/session.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent {
 	token:string='undefined';
 
 	constructor(
+		public router:Router,
 		public sessionService: SessionService
 	){
 		this.valid=sessionService.isValid();
