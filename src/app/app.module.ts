@@ -10,13 +10,15 @@ import {RouteNotFoundComponent} from './route-not-found/route-not-found.componen
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 import {CookieService} from 'ngx-cookie-service';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ManagementComponent,
-    RouteNotFoundComponent
+    RouteNotFoundComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

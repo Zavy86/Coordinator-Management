@@ -6,6 +6,7 @@ import {FormControl,FormGroup,Validators} from "@angular/forms";
 import {LoginRequest} from "../../models/LoginRequest.model";
 import {LoginResponse} from "../../models/LoginResponse.model";
 import {HandlerResponse} from "../../models/HandlerResponse.model";
+import {SessionService} from "../../services/session/session.service";
 
 @Component({
   selector:'app-login',
@@ -16,6 +17,8 @@ export class LoginComponent implements OnInit {
 
 	title:string='Coordinator';
 	subtitle:string='Management';
+
+	trying:boolean=false;
 
 	loginForm=new FormGroup({
 		account:new FormControl('',Validators.required),
@@ -28,18 +31,17 @@ export class LoginComponent implements OnInit {
 	constructor(
 		private router:Router,
 		private http:HttpClient,
+		private sessionService: SessionService,
 		private	cookieService:CookieService
 	){
+	}
 
+	ngOnInit(): void {
+		console.log('login component init');
 		if(this.cookieService.check('login-account')){
 			this.loginForm.controls['remember'].setValue(true);
 			this.loginForm.controls['account'].setValue(this.cookieService.get('login-account'));
 		}
-
-	}
-
-	ngOnInit(): void {
-		console.log('login init');
 	}
 
 	loginFormSubmit(){
@@ -49,6 +51,19 @@ export class LoginComponent implements OnInit {
 		}
 		console.log(this.loginForm.value);
 
+		this.trying=true;
+
+		if(this.sessionService.tryAuthenticate(this.loginForm.controls['account'].value,this.loginForm.controls['password'].value)){
+			alert('success')
+			//this.router.navigateByUrl("/management");
+		}else{
+			//this.router.navigateByUrl("/login"); già qui
+			alert('failed')
+		}
+
+		this.trying=false;
+
+		/*
 		let vLoginRequest:LoginRequest=new LoginRequest();
 
 		vLoginRequest.username=this.loginForm.controls['account'].value;
@@ -80,10 +95,10 @@ export class LoginComponent implements OnInit {
 				console.log("login ok");
 				this.token=vLoginResponse.token;  // token da mettere nell'app-root o in un service
 				this.cookieService.set('login-token',this.token);
-				this.router.navigateByUrl("/management");
 			}
 
 		});
+		*/
 
 	}
 
