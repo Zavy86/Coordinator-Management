@@ -7,12 +7,12 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './login/login.component';
 import {ManagementComponent} from './management/management.component';
 import {RouteNotFoundComponent} from './route-not-found/route-not-found.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 import {CookieService} from 'ngx-cookie-service';
 import { LogoutComponent } from './logout/logout.component';
 import { HubComponent } from './hub/hub.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
