@@ -31,7 +31,7 @@ export class SessionService{
 	}
 
 	private checkIfTokenIsValid():void{
-		this.valid=true;
+		this.valid=(this.token.length>0);
 	}
 
 	private destroySessionAndRemoveTokenFromCookie(){

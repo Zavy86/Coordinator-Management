@@ -55,9 +55,9 @@ export class LoginComponent implements OnInit {
 
 		if(this.sessionService.tryAuthenticate(this.loginForm.controls['account'].value,this.loginForm.controls['password'].value)){
 			alert('success')
-			//this.router.navigateByUrl("/management");
+			this.router.navigateByUrl("/Hub");
 		}else{
-			//this.router.navigateByUrl("/login"); già qui
+			//this.router.navigateByUrl("/Login"); già qui
 			alert('failed')
 		}
 

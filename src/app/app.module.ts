@@ -11,6 +11,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 import {CookieService} from 'ngx-cookie-service';
 import { LogoutComponent } from './logout/logout.component';
+import { HubComponent } from './hub/hub.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LogoutComponent } from './logout/logout.component';
     LoginComponent,
     ManagementComponent,
     RouteNotFoundComponent,
-    LogoutComponent
+    LogoutComponent,
+    HubComponent
   ],
   imports: [
     BrowserModule,
