@@ -1,31 +1,68 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-	<a class="navbar-brand" href="#">Coordinator</a>
+	<div class="container">
 
-	<button *ngIf="sessionService.isValid()" (click)="isMenuCollapsed = !isMenuCollapsed" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+		<a class="navbar-brand mb-0" href="#">
+			<img src="/assets/images/coordinator_logo.png" alt="" width="24" height="24"> Coordinator
+		</a>
 
-	<div *ngIf="sessionService.isValid()" [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
+		<button *ngIf="sessionService.isValid()" (click)="isMenuCollapsed = !isMenuCollapsed" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-		<ul class="navbar-nav me-auto">
-			<li class="nav-item"> <!-- active -->
-				<a class="nav-link" routerLink="/Hub">Hub</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" routerLink="/Management">Management</a>
-			</li>
-		</ul>
+		<div *ngIf="sessionService.isValid()" [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarContent">
 
-		<ul class="navbar-nav mr-auto">
-			<li ngbDropdown class="nav-item dropdown">
-				<a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">You</a>
-				<ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">  <!-- @valutare se mettere end sul bootstrap 5 -->
-					<li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
-					<li><a class="dropdown-item" routerLink="/Logout">Logout</a></li>
-				</ul>
-			</li>
-		</ul>
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+				<li class="nav-item">
+					<a class="nav-link" routerLink="/Hub">Hub</a> <!-- mettere icona windows -->
+				</li>
+
+				<li ngbDropdown class="nav-item dropdown">
+					<a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>
+					<ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarMenuDropdown">
+						<li><span class="dropdown-header">Group</span></li>
+						<li><a class="dropdown-item" routerLink="/System">System</a></li>
+						<li><a class="dropdown-item" routerLink="/Management">Management</a></li>
+
+						<!--
+						<li><hr class="dropdown-divider"></li>
+						<li><a ngbDropdownToggle class="dropdown-item dropdown-toggle" href="#">Dropdown &raquo;</a>
+							<ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarMenuDropdown">
+								<li><span class="dropdown-header">Group</span></li>
+								<li><a class="dropdown-item" routerLink="/System">System</a></li>
+								<li><a class="dropdown-item" routerLink="/Management">Management</a></li>
+							</ul>
+						</li>
+						-->
+
+					</ul>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link active" routerLink="/System">System</a>  <!-- @todo nome del modulo selezionato -->
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link disabled" routerLink="/Management/Accounts">Accounts</a>  <!-- @todo nome dello script -->
+				</li>
+
+			</ul>
+
+			<ul class="navbar-nav mr-auto">
+				<li ngbDropdown class="nav-item dropdown">
+					<a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarSessionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">You</a>
+					<ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSessionDropdown">
+						<li><span class="dropdown-header text-end">Username</span></li>  <!-- @todo username -->
+						<li><a class="dropdown-item text-end" routerLink="/Profile">Profile</a></li>
+						<li><a class="dropdown-item text-end" routerLink="/Settings">Settings</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item text-end" routerLink="/Logout">Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+
+		</div>
 
 	</div>
 

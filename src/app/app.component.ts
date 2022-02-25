@@ -9,15 +9,12 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
 
-	valid:boolean=false;
-	token:string='undefined';
+	debug:boolean=true;
 
 	constructor(
 		public router:Router,
-		public sessionService: SessionService
+		public sessionService:SessionService
 	){
-		this.valid=sessionService.isValid();
-		this.token=sessionService.getToken();
 	}
 
 }

@@ -1,12 +1,4 @@
-<nav>
-	<ul>
-		<li><a routerLink="/Login" routerLinkActive="active">Login</a></li>
-		<li><a routerLink="/Logout" routerLinkActive="active">Logout</a></li>
-		<li><a routerLink="/Hub" routerLinkActive="active">Hub</a></li>
-		<li><a routerLink="/Management" routerLinkActive="active">Management</a></li>
-	</ul>
-</nav>
-<div>
+<div *ngIf="debug">
 	<p>session: {{sessionService.isValid()}}</p>
 	<p>token: {{sessionService.getToken()}}</p>
 </div>

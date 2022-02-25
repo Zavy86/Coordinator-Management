@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
 	subtitle:string='Management';
 
 	trying:boolean=false;
+	failed:boolean=false;
 
 	loginForm=new FormGroup({
 		account:new FormControl('',Validators.required),
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
 		private sessionService: SessionService,
 		private	cookieService:CookieService
 	){
+		this.sessionService.logout();
 	}
 
 	ngOnInit(): void {
@@ -53,52 +55,21 @@ export class LoginComponent implements OnInit {
 
 		this.trying=true;
 
-		if(this.sessionService.tryAuthenticate(this.loginForm.controls['account'].value,this.loginForm.controls['password'].value)){
-			alert('success')
-			this.router.navigateByUrl("/Hub");
-		}else{
-			//this.router.navigateByUrl("/Login"); già qui
-			alert('failed')
-		}
-
-		this.trying=false;
-
-		/*
-		let vLoginRequest:LoginRequest=new LoginRequest();
-
-		vLoginRequest.username=this.loginForm.controls['account'].value;
-		vLoginRequest.password=this.loginForm.controls['password'].value;
-
-		console.log(vLoginRequest);
-
-		if(this.loginForm.controls['remember'].value){
-			console.log('set login-account cookie');
-			this.cookieService.set('login-account',vLoginRequest.username);
-		}else{
-			console.log('remove login-account cookie');
-			this.cookieService.delete('login-account');
-		}
-
-		this.http.post<any>('http://coordinator-engine.test/Authentication/Authenticate',vLoginRequest).subscribe(response=>{
-			console.log(response);
-
-			let vResponse=new HandlerResponse(response.error,response.errors,response.object,response.data);
-			let vLoginResponse=new LoginResponse(vResponse.data);
-
-			console.log(vResponse);
-			console.log(vLoginResponse);
-
-			if(vResponse.error){
-				vResponse.errors.forEach(error=>console.log(error));
-				vResponse.errors.forEach(error=>alert(error.description));
+		this.sessionService.tryAuthenticate(this.loginForm.controls['account'].value,this.loginForm.controls['password'].value).subscribe(ret=>{
+			if(ret){
+				//alert('success')
+				this.router.navigateByUrl("/Hub");
 			}else{
-				console.log("login ok");
-				this.token=vLoginResponse.token;  // token da mettere nell'app-root o in un service
-				this.cookieService.set('login-token',this.token);
+				this.failed=true;
+				setTimeout(()=>{this.failed=false;},9*1000);
 			}
 
+			this.trying=false;
+
 		});
-		*/
+
+		// per evitare problemi se si dovesse piantare qualcosa blocco dopo un timeout di 60 secondi
+		setTimeout(()=>{this.trying=false;},60*1000);
 
 	}
 
