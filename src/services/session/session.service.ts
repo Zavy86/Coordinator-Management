@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
+import {BackendService} from "../../services/backend/backend.service";
 import {LoginRequest} from "../../models/LoginRequest.model";
 import {Response} from "../../models/Response.model";
 import {LoginResponse} from "../../models/LoginResponse.model";
@@ -18,7 +19,8 @@ export class SessionService{
 
   constructor(
 		private httpClient:HttpClient,
-		private	cookieService:CookieService
+		private	cookieService:CookieService,
+		private backendService: BackendService
 	){
 		this.loadTokenFromCookie();
 		this.checkIfTokenIsValid();
@@ -56,13 +58,35 @@ export class SessionService{
 		this.checkIfTokenIsValid();
 	}
 
-	public tryAuthenticate(identifier:string,password:string):Observable<boolean>{
+	public tryAuthenticate(handler:string,identifier:string,password:string):Observable<boolean>{
 		let vLoginRequest:LoginRequest=new LoginRequest();
-		vLoginRequest.handler='local';
+		vLoginRequest.handler=handler;
 		vLoginRequest.identifier=identifier;
 		vLoginRequest.password=password;
 		console.log(vLoginRequest);
 		console.log('try to authenticate...');
+
+		/*   capire se si puo fare cosi (ora no va credo perche il subscribe risponde dopo e lui si aspetta una risposta subito
+		this.backendService.POST('/Authentication/Login',vLoginRequest).subscribe(response=>{
+			if(response===false){
+				console.log('http call failed');  // @todo capire se serve o meno
+				return false;
+			}
+			if(response.object!=='CAS\\Authentication\\Response\\ProfileResponse'){
+				console.log('http response wrong object');
+				return false;
+			}
+			console.log('http handler call success');
+
+			let vLoginResponse=new LoginResponse(response.data);
+			console.log(vLoginResponse);
+
+			this.setNewTokenAndCheckIfIsValid(vLoginResponse.token);
+			return true;
+
+		});
+*/
+
 		return this.httpClient.post<any>('http://auth.coordinator.test/Authentication/Login',vLoginRequest).pipe(map(response=>{
 			console.log(response);
 			let vResponse=new Response(response.error,response.errors,response.object,response.data);
@@ -80,6 +104,7 @@ export class SessionService{
 				return true;
 			}
 		}));
+
 	}
 
 	logout(){

@@ -13,6 +13,7 @@ import {SessionService} from "../../services/session/session.service";
   templateUrl:'./login.component.html',
   styleUrls:['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
 	title:string='Coordinator';
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
 	failed:boolean=false;
 
 	loginForm=new FormGroup({
+		handler:new FormControl('',Validators.required),
 		account:new FormControl('',Validators.required),
 		password:new FormControl('', Validators.required),
 		remember:new FormControl('')
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit {
 		console.log('login component init');
 		if(this.cookieService.check('login-account')){
 			this.loginForm.controls['remember'].setValue(true);
+			this.loginForm.controls['handler'].setValue(this.cookieService.get('login-handler'));
 			this.loginForm.controls['account'].setValue(this.cookieService.get('login-account'));
 		}
 	}
@@ -53,9 +56,14 @@ export class LoginComponent implements OnInit {
 		}
 		console.log(this.loginForm.value);
 
+		if(this.loginForm.controls['remember'].value){
+			this.cookieService.set('login-handler',this.loginForm.controls['handler'].value,30);
+			this.cookieService.set('login-account',this.loginForm.controls['account'].value,30);
+		}
+
 		this.trying=true;
 
-		this.sessionService.tryAuthenticate(this.loginForm.controls['account'].value,this.loginForm.controls['password'].value).subscribe(ret=>{
+		this.sessionService.tryAuthenticate(this.loginForm.controls['handler'].value,this.loginForm.controls['account'].value,this.loginForm.controls['password'].value).subscribe(ret=>{
 			if(ret){
 				//alert('success')
 				this.router.navigateByUrl("/Hub");

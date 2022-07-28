@@ -26,6 +26,14 @@
 				<br/><br/>
 
 				<div class="mb-3">
+					<select class="form-select form-select-lg mb-3" formControlName="handler" id="handler">
+						<option value="local">LOCAL</option>
+						<option value="cas">CAS</option>
+					</select>
+					<label for="handler" class="form-label"><small class="text-muted">Select your authentication handler.</small></label>
+				</div>
+
+				<div class="mb-3">
 					<input type="text" class="form-control form-control-lg" placeholder="Account" formControlName="account" id="account">
 					<label for="account" class="form-label"><small class="text-muted">Never share your account with anyone else.</small></label>
 				</div>

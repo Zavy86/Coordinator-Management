@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ProfileService} from "../../services/profile/profile.service";
-import {HandlerService} from "../../services/handler/handler.service";
+import {BackendService} from "../../services/backend/backend.service";
 import {HandlerResponse} from "../../models/HandlerResponse.model";
+import {ProfileResponse} from "../../models/ProfileResponse.model";
 
 @Component({
   selector: 'app-profile',
@@ -18,58 +18,64 @@ export class ProfileComponent implements OnInit {
 	lastname:string='Loading...';
 	gender:string='Loading...';
 
-	handlers:string[]=['Loading...'];
-
-	handlers_objs:HandlerResponse[]=[];
+	handlers:HandlerResponse[]=[];
 
 	update_action:string='';
 
   constructor(
-		private profileService: ProfileService,
-		private handlerService: HandlerService
+		private backendService: BackendService
 	){}
 
 
 
   ngOnInit(): void {
-
 		console.log('profile component init');
 
-		this.profileService.getProfile().subscribe(response=>{
+		// retrieve profile
+
+		this.backendService.GET('/Profile').subscribe(response=>{
 			if(response===false){
-				console.log('http profile call failed');
+				console.log('http call failed');  // @todo capire se serve o meno
 				return;
 			}
+			if(response.object!=='CAS\\Authentication\\Response\\ProfileResponse'){
+				console.log('http response wrong object');
+				return;
+			}
+			console.log('http handler call success');
 
-			console.log('http profile call success');
+			let profileResponse=new ProfileResponse(response.data);  // @todo capire come iniettare nella GET in modo da evitare sto passaggio e usare direttamente response
 
-			this.uid=response.uid;
-			this.account=response.account;
-			this.fullname=response.fullname;
-			this.firstname=response.firstname;
-			this.lastname=response.lastname;
-			this.gender=response.gender;
-			this.handlers=response.handlers;
+			this.uid=profileResponse.uid;
+			this.account=profileResponse.account;
+			this.fullname=profileResponse.fullname;
+			this.firstname=profileResponse.firstname;
+			this.lastname=profileResponse.lastname;
+			this.gender=profileResponse.gender;
 
-			this.update_action=response.actions.update;
+			this.update_action=profileResponse.actions.update;
 
 			//this.handlers.forEach(this.getHandler);    perche cazzo non va cosi?
-			for(let i=0; i<this.handlers.length; i++){
-				this.getHandler(this.handlers[i]);
+			for(let i=0; i<profileResponse.handlers.length; i++){
+				this.getHandler(profileResponse.handlers[i]);
 			}
 
 		});
 
+
   }
 
 	getHandler(uidHandler:string):void{
-		this.handlerService.getHandler(uidHandler).subscribe(response=>{
+		this.backendService.GET(uidHandler).subscribe(response=>{
 			if(response===false){
 				console.log('http handler call failed');
 				return;
 			}
 			console.log('http handler call success');
-			this.handlers_objs.push(response);
+
+			let handlerResponse=new HandlerResponse(response.data);  // @todo capire come iniettare nella GET in modo da evitare sto passaggio e usare direttamente response
+
+			this.handlers.push(handlerResponse);
 		});
 	}
 

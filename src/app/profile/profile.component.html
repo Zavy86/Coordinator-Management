@@ -20,9 +20,9 @@
 
 	</dl>
 
-	<h2>Handlers</h2>
+	<h2 *ngIf="handlers.length">Handlers</h2>
 
-	<dl class="row" *ngFor="let handler of handlers_objs">
+	<dl class="row" *ngFor="let handler of handlers">
 
 		<dt class="col-sm-3">Handler</dt>
 		<dd class="col-sm-9">{{handler.handler}}</dd>
