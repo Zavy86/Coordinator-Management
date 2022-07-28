@@ -20,13 +20,21 @@
 
 	</dl>
 
-	<dl class="row">
+	<h2>Handlers</h2>
 
-		<dt class="col-sm-3">Handlers</dt>
-		<dd class="col-sm-9">
-			<p *ngFor="let handler of handlers">{{handler}}</p>
-		</dd>
+	<dl class="row" *ngFor="let handler of handlers_objs">
+
+		<dt class="col-sm-3">Handler</dt>
+		<dd class="col-sm-9">{{handler.handler}}</dd>
+
+		<dt class="col-sm-3">Identifier</dt>
+		<dd class="col-sm-9">{{handler.identifier}}</dd>
+
+		<dt class="col-sm-3">Enabled</dt>
+		<dd class="col-sm-9">{{handler.enabled}}</dd>
 
 	</dl>
+
+	<a role="button" class="btn btn-primary" [ngClass]="{'disabled' : !update_action.length}" href="/Profile/Update">Update</a>
 
 </div>

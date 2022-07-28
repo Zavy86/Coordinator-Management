@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {LoginRequest} from "../../models/LoginRequest.model";
-import {HandlerResponse} from "../../models/HandlerResponse.model";
+import {Response} from "../../models/Response.model";
 import {LoginResponse} from "../../models/LoginResponse.model";
 import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {map} from 'rxjs/operators';
 
@@ -18,7 +17,6 @@ export class SessionService{
 	private token:string='';
 
   constructor(
-		private router:Router,
 		private httpClient:HttpClient,
 		private	cookieService:CookieService
 	){
@@ -67,7 +65,7 @@ export class SessionService{
 		console.log('try to authenticate...');
 		return this.httpClient.post<any>('http://auth.coordinator.test/Authentication/Login',vLoginRequest).pipe(map(response=>{
 			console.log(response);
-			let vResponse=new HandlerResponse(response.error,response.errors,response.object,response.data);
+			let vResponse=new Response(response.error,response.errors,response.object,response.data);
 			let vLoginResponse=new LoginResponse(vResponse.data);
 			console.log(vResponse);
 			console.log(vLoginResponse);

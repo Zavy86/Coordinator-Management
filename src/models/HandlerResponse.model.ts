@@ -1,16 +1,16 @@
-import {ResponseError} from "./ResponseError.model";
+export class HandlerResponse {
+	uid: string = "";
+	uidAccount: string = "";
+	handler: string = "";
+	identifier: string = "";
+	enabled: boolean;
 
-export class HandlerResponse{
-	error:boolean=false;
-	errors:ResponseError[]=[];
-	object:string='';
-	data:any;
-
-	constructor(error:boolean,errors:any[],object:string,data:any) {
-		this.error=error;
-		this.object=object;
-		this.data=data;
-		errors.forEach(error=>this.errors.push(new ResponseError(error.code,error.description,error.information)));
+	constructor(data:any) {
+		this.uid=data.uid;
+		this.uidAccount=data.uidAccount;
+		this.handler=data.handler;
+		this.identifier=data.identifier;
+		this.enabled=data.enabled;
 	}
 
 }

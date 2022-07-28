@@ -3,7 +3,7 @@ import {CookieService} from "ngx-cookie-service";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {HandlerResponse} from "../../models/HandlerResponse.model";
+import {Response} from "../../models/Response.model";
 import {ProfileResponse} from "../../models/ProfileResponse.model";
 
 @Injectable({
@@ -42,7 +42,7 @@ export class ProfileService {
 		return this.httpClient.get<any>('http://auth.coordinator.test/Profile',options).pipe(map(response=>{
 			console.log('response:');
 			console.log(response);
-			let vResponse=new HandlerResponse(response.error,response.errors,response.object,response.data);
+			let vResponse=new Response(response.error,response.errors,response.object,response.data);
 			let vProfileResponse=new ProfileResponse(vResponse.data);
 			console.log(vResponse);
 			console.log(vProfileResponse);

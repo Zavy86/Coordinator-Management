@@ -6,7 +6,7 @@ export class ProfileResponse {
 	lastname: string = "";
 	gender: string = "";
 	handlers: string[] = [];
-	actions: object = {};
+	actions: Actions = {update:''};
 
 	constructor(data:any) {
 		this.uid=data.uid;
@@ -16,7 +16,12 @@ export class ProfileResponse {
 		this.lastname=data.lastname;
 		this.gender=data.gender;
 		this.handlers=data.handlers;
-		this.actions=data.actions;
+
+		this.actions.update=data.actions.update;
 	}
 
+}
+
+type Actions = {
+	update: string;
 }
