@@ -13,6 +13,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { HubComponent } from './hub/hub.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     RouteNotFoundComponent,
     LogoutComponent,
     HubComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

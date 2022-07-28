@@ -68,8 +68,8 @@ export class LoginComponent implements OnInit {
 
 		});
 
-		// per evitare problemi se si dovesse piantare qualcosa blocco dopo un timeout di 60 secondi
-		setTimeout(()=>{this.trying=false;},60*1000);
+		// per evitare problemi se si dovesse piantare qualcosa blocco dopo un timeout di 30 secondi
+		setTimeout(()=>{this.trying=false;},30*1000);
 
 	}
 

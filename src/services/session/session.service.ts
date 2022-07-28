@@ -58,24 +58,14 @@ export class SessionService{
 		this.checkIfTokenIsValid();
 	}
 
-	/** creare poi servizio specifico */
-
-	public __tryAuthenticate(username:string,password:string):boolean{
-		this.destroySessionAndRemoveTokenFromCookie();
-		if(username=='administrator' && password=='password'){
-			this.setNewTokenAndCheckIfIsValid('TOKENsalvatoNELcookie'+Math.floor(Math.random()*99999));
-			return true;
-		}
-		return false;
-	}
-
-	public tryAuthenticate(username:string,password:string):Observable<boolean>{
+	public tryAuthenticate(identifier:string,password:string):Observable<boolean>{
 		let vLoginRequest:LoginRequest=new LoginRequest();
-		vLoginRequest.username=username;
+		vLoginRequest.handler='local';
+		vLoginRequest.identifier=identifier;
 		vLoginRequest.password=password;
 		console.log(vLoginRequest);
 		console.log('try to authenticate...');
-		return this.httpClient.post<any>('http://coordinator-engine.test/Authentication/Authenticate',vLoginRequest).pipe(map(response=>{
+		return this.httpClient.post<any>('http://auth.coordinator.test/Authentication/Login',vLoginRequest).pipe(map(response=>{
 			console.log(response);
 			let vResponse=new HandlerResponse(response.error,response.errors,response.object,response.data);
 			let vLoginResponse=new LoginResponse(vResponse.data);
@@ -97,4 +87,5 @@ export class SessionService{
 	logout(){
 		this.destroySessionAndRemoveTokenFromCookie();
 	}
+
 }
