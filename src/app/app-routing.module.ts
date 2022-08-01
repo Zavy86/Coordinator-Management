@@ -12,8 +12,8 @@ const routes: Routes = [
 	{path:'',redirectTo:'/Hub',pathMatch:'full'},
 	{path:'Login',component:LoginComponent},
 	{path:'Logout',component:LogoutComponent},
-	{path:'Profile',component:ProfileComponent},
 	{path:'Hub',component:HubComponent,canActivate:[SessionValidGuard]},
+	{path:'Profile',component:ProfileComponent,canActivate:[SessionValidGuard]},
 	{path:'Management',component:ManagementComponent,canActivate:[SessionValidGuard]},
 	{path:'**',component:RouteNotFoundComponent}
 ];

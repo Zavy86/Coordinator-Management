@@ -1,11 +1,8 @@
 import {Component,OnInit} from '@angular/core';
 import {Router,ActivatedRoute,ParamMap} from '@angular/router';
+import {FormControl,FormGroup,Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
-import {FormControl,FormGroup,Validators} from "@angular/forms";
-import {LoginRequest} from "../../models/LoginRequest.model";
-import {LoginResponse} from "../../models/LoginResponse.model";
-import {HandlerResponse} from "../../models/HandlerResponse.model";
 import {SessionService} from "../../services/session/session.service";
 
 @Component({

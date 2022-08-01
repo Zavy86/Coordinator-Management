@@ -4,6 +4,7 @@ import {BackendService} from "../../services/backend/backend.service";
 import {LoginRequest} from "../../models/LoginRequest.model";
 import {Response} from "../../models/Response.model";
 import {LoginResponse} from "../../models/LoginResponse.model";
+import {CheckResponse} from "../../models/CheckResponse.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from 'rxjs/operators';
@@ -16,6 +17,7 @@ export class SessionService{
 
 	private valid:boolean=false;
 	private token:string='';
+	private account:string='Loading...';
 
   constructor(
 		private httpClient:HttpClient,
@@ -33,12 +35,31 @@ export class SessionService{
 	}
 
 	private checkIfTokenIsValid():void{
-		this.valid=(this.token.length>0);
+
+		// reload token
+		this.backendService.loadTokenFromCookie();
+
+		this.backendService.GET('/Authentication/Check').subscribe(response=>{
+			if(response===false){
+				console.log('http call failed');  // @todo capire se serve o meno
+				this.valid=false;
+			}
+			if(response.object!=='CAS\\Authentication\\Response\\CheckResponse'){
+				console.log('http response wrong object');
+				this.valid=false;
+			}
+			console.log('http check call success');
+			let vCheckResponse=new CheckResponse(response.data);
+			console.log(vCheckResponse);
+			this.valid=vCheckResponse.valid;
+			this.account=vCheckResponse.account;
+		});
 	}
 
 	private destroySessionAndRemoveTokenFromCookie(){
 		this.valid=false;
 		this.token='';
+		this.account='Loading...';
 		if(this.cookieService.check('login-token')) {
 			this.cookieService.delete('login-token');
 		}
@@ -52,6 +73,10 @@ export class SessionService{
 		return this.token;
 	}
 
+	public getAccount():string{
+		return this.account;
+	}
+
 	public setNewTokenAndCheckIfIsValid(token:string):void{
 		this.token=token;
 		this.cookieService.set('login-token',token);
@@ -59,6 +84,10 @@ export class SessionService{
 	}
 
 	public tryAuthenticate(handler:string,identifier:string,password:string):Observable<boolean>{
+		// reset current session
+		this.destroySessionAndRemoveTokenFromCookie();
+
+		//
 		let vLoginRequest:LoginRequest=new LoginRequest();
 		vLoginRequest.handler=handler;
 		vLoginRequest.identifier=identifier;
@@ -100,6 +129,7 @@ export class SessionService{
 				return false;
 			}else{
 				console.log("login success");
+				this.valid=true;
 				this.setNewTokenAndCheckIfIsValid(vLoginResponse.token);
 				return true;
 			}

@@ -55,10 +55,7 @@ export class ProfileComponent implements OnInit {
 
 			this.update_action=profileResponse.actions.update;
 
-			//this.handlers.forEach(this.getHandler);    perche cazzo non va cosi?
-			for(let i=0; i<profileResponse.handlers.length; i++){
-				this.getHandler(profileResponse.handlers[i]);
-			}
+			profileResponse.handlers.forEach(this.getHandler,this);
 
 		});
 

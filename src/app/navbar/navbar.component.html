@@ -53,7 +53,7 @@
 				<li ngbDropdown class="nav-item dropdown">
 					<a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarSessionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">You</a>
 					<ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSessionDropdown">
-						<li><span class="dropdown-header text-end">Username</span></li>  <!-- @todo username -->
+						<li><span class="dropdown-header text-end">{{sessionService.getAccount()}}</span></li>  <!-- @todo username -->
 						<li><a class="dropdown-item text-end" routerLink="/Profile">Profile</a></li>
 						<li><a class="dropdown-item text-end" routerLink="/Settings">Settings</a></li>
 						<li><hr class="dropdown-divider"></li>

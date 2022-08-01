@@ -22,7 +22,7 @@ export class BackendService {
 		this.loadTokenFromCookie();
 	}
 
-	private loadTokenFromCookie():void{
+	public loadTokenFromCookie():void{
 		if(this.cookieService.check('login-token')){
 			this.options= {
 				'headers': {
@@ -44,9 +44,6 @@ export class BackendService {
 	}
 
 	public GET(uri:string):Observable<any>{  // impostare interfaccia dei models
-
-
-
 		console.log('try to make http get...');
 		return this.httpClient.get<any>(this.url+uri,this.options).pipe(map(response=>{
 			console.log('response:');

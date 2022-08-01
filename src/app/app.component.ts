@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
 
-	debug:boolean=true;
+	debug:boolean=false;
 
 	constructor(
 		public router:Router,
